@@ -1,5 +1,6 @@
 from openai import OpenAI
 import streamlit as st
+import os
 
 st.set_page_config(page_title="Generador de captions con IA para Instagram", page_icon="📸")
 
@@ -15,7 +16,11 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
+
+my_api_key = os.getenv("OPENAI_API_KEY")
+client = OpenAI(api_key = my_api_key)
+
+#client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 
 st.markdown("""
     <style>
