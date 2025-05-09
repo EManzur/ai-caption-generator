@@ -2,20 +2,52 @@ from openai import OpenAI
 import streamlit as st
 import os
 
-st.set_page_config(page_title="Generador de captions con IA para Instagram", page_icon="📸")
+st.set_page_config(page_title="Generador de captions con IA", page_icon="📸", layout="centered")
 
-st.markdown(
-    """
+st.markdown("""
     <style>
-    html, body, [data-testid="stAppViewContainer"] {
-        background-color: #fdf6e3 !important;
-        color: #2c3e50 !important;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
+        html, body, [data-testid="stAppViewContainer"] {
+            background-color: #fefefe !important;
+            font-family: 'Segoe UI', sans-serif;
+        }
 
+        h1, h4 {
+            color: #2c3e50;
+            text-align: center;
+        }
+
+        .stTextInput > div > input,
+        .stSelectbox > div > div {
+            background-color: #ffffff !important;
+            color: #2c3e50 !important;
+            border-radius: 8px;
+            padding: 10px;
+        }
+
+        .stButton>button {
+            background-color: #ff6f61;
+            color: white;
+            padding: 0.75em 1.5em;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .stButton>button:hover {
+            background-color: #e04e41;
+        }
+
+        .caption-card {
+            background-color: #fdf6e3;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            font-size: 16px;
+        }
+    </style>
+""", unsafe_allow_html=True)
 
 my_api_key = os.getenv("OPENAI_API_KEY")
 client = OpenAI(api_key = my_api_key)
@@ -130,7 +162,7 @@ if st.button("✨ Generar Captions"):
         st.warning("Por favor ingresa una descripción.")
 
 # --- Footer ---
-st.markdown("<hr style='margin-top: 50px;'>", unsafe_allow_html=True)
+st.markdown("<hr style='margin-top: 50px; border: none; height: 1px; background-color: #FFFFFF;'>", unsafe_allow_html=True)
 st.markdown(
     "<p style='text-align: center; font-size: 12px; color: gray;'>"
     "✨ Captions generadas con IA (by OpenAI)"
