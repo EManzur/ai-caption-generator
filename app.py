@@ -4,8 +4,8 @@ import os
 
 st.set_page_config(page_title="Generador de captions con IA", page_icon="📸", layout="centered")
 
-LOGO_URL = "logo.png"  # Cambia esta por tu URL real
-BANNER_URL = "banner.png"  # Cambia esta también
+LOGO_URL = "https://raw.githubusercontent.com/EManzur/ai-caption-generator/main/logo.png"  # Cambia esta por tu URL real
+BANNER_URL = "https://raw.githubusercontent.com/EManzur/ai-caption-generator/main/banner.jpg"  # Cambia esta también
 
 # Mostrar logo centrado arriba
 st.markdown(
