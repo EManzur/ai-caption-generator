@@ -4,6 +4,29 @@ import os
 
 st.set_page_config(page_title="Generador de captions con IA", page_icon="📸", layout="centered")
 
+LOGO_URL = "logo.png"  # Cambia esta por tu URL real
+BANNER_URL = "banner.png"  # Cambia esta también
+
+# Mostrar logo centrado arriba
+st.markdown(
+    f"""
+    <div style='text-align: center; margin-top: 10px;'>
+        <img src="{LOGO_URL}" alt="Logo" style="width: 150px;"/>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
+# Mostrar banner de ancho completo
+st.markdown(
+    f"""
+    <div style='margin: 20px auto; text-align: center;'>
+        <img src="{BANNER_URL}" alt="Banner" style="width: 100%; max-height: 250px; object-fit: cover; border-radius: 10px;"/>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
 st.markdown("""
     <style>
         html, body, [data-testid="stAppViewContainer"] {
@@ -149,7 +172,7 @@ if st.button("✨ Generar Captions"):
             captions = text_instagram_caption(description, tone)
         st.markdown(
                     '<div style="background-color: #FFFFFF; padding: 15px; border-radius: 10px; '
-                    'border-left: 6px solid #f1c40f; font-weight: bold; color: #2c3e50; margin-top: 20px;">'
+                    'border-left: 6px solid #dc6378; font-weight: bold; color: #f1c694; margin-top: 20px;">'
                     '✨ ¡Listo! Aquí están tus captions:'
                     '</div>',
                     unsafe_allow_html=True
@@ -162,9 +185,9 @@ if st.button("✨ Generar Captions"):
         st.warning("Por favor ingresa una descripción.")
 
 # --- Footer ---
-st.markdown("<hr style='margin-top: 50px; border: none; height: 1px; background-color: #FFFFFF;'>", unsafe_allow_html=True)
+st.markdown("<hr style='margin-top: 50px; border: none; height: 1px; background-color: #edeccf;'>", unsafe_allow_html=True)
 st.markdown(
-    "<p style='text-align: center; font-size: 12px; color: gray;'>"
+    "<p style='text-align: center; font-size: 12px; color: #101652;'>"
     "✨ Captions generadas con IA (by OpenAI)"
     "</p>",
     unsafe_allow_html=True
