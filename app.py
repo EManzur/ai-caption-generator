@@ -1,27 +1,50 @@
 from openai import OpenAI
 import streamlit as st
 import os
+import base64
 
 st.set_page_config(page_title="Generador de captions con IA", page_icon="📸", layout="centered")
 
-LOGO_URL = "https://raw.githubusercontent.com/EManzur/ai-caption-generator/main/logo.png"  # Cambia esta por tu URL real
-BANNER_URL = "https://raw.githubusercontent.com/EManzur/ai-caption-generator/main/banner.jpg"  # Cambia esta también
+LOGO_URL = "https://raw.githubusercontent.com/EManzur/ai-caption-generator/main/logo.png"  
+BANNER_URL = "https://raw.githubusercontent.com/EManzur/ai-caption-generator/main/banner.jpg" 
 
-# Mostrar logo centrado arriba
-st.markdown(
-    f"""
-    <div style='text-align: center; margin-top: 10px;'>
-        <img src="{LOGO_URL}" alt="Logo" style="width: 150px;"/>
+# Header 
+
+st.markdown("""
+    <style>
+        .custom-header {
+            background-color: white;
+            border: solid #ff0092;
+            padding: 5px 5px;
+            display: flex;
+            align-items: center;
+            border-radius: 10px;
+        }
+
+        .custom-header img {
+            height: 100px;
+        }
+
+        .custom-header h1 {
+            color: #ff0092;
+            font-size: 22px;
+            margin: 0;
+            padding-left: 10px;
+        }
+    </style>
+
+    <div class="custom-header">
+        <img src= "https://raw.githubusercontent.com/EManzur/ai-caption-generator/main/logo.png" alt="Logo" style = "border-radius: 10px;" >
+        <h1> Caption Generator </h1>
     </div>
-    """,
-    unsafe_allow_html=True
-)
+""", unsafe_allow_html=True)
+
 
 # Mostrar banner de ancho completo
 st.markdown(
     f"""
     <div style='margin: 20px auto; text-align: center;'>
-        <img src="{BANNER_URL}" alt="Banner" style="width: 100%; max-height: 250px; object-fit: cover; border-radius: 10px;"/>
+        <img src="{BANNER_URL}" alt="Banner" style="width: 100%; max-height: 400px; object-fit: cover; border-radius: 10px;"/>
     </div>
     """,
     unsafe_allow_html=True
@@ -29,54 +52,14 @@ st.markdown(
 
 st.markdown("""
     <style>
-        body {
-            background-color: #bc9cc4;
-        }
-
-        .block-container {
-            padding-top: 2rem;
-        }
-
-        h1 {
-            text-align: center;
-            color: ##3a1367;
-        }
-
-        .main-header {
-            background-color: #e30e63;
-            padding: 20px;
-            border-radius: 8px;
-            color: white;
-            text-align: center;
-            font-size: 32px;
-            font-weight: 700;
-        }
-
-        .input-area {
-            background-color: #ffffff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 2px 10px rgba(0,0,0,0.05);
-            margin-bottom: 30px;
-        }
 
         .caption-box {
-            background-color: #fff6e8;
-            padding: 20px;
+            background-color: #ff0092;
             border-left: 6px solid #f39c12;
+            padding: 20px;
             border-radius: 10px;
             margin-top: 20px;
-            color: #333;
             font-size: 16px;
-            font-family: "Segoe UI", sans-serif;
-        }
-
-        .logo {
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-            width: 180px;
-            margin-bottom: 20px;
         }
 
         .footer {
@@ -94,12 +77,64 @@ client = OpenAI(api_key = my_api_key)
 #client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 
 # --- Header ---
-st.markdown("<header>📸 Generador de captions con IA</header>", unsafe_allow_html=True)
-st.markdown("#### Genera 5 captions atractivas con hashtags para tu post de Instagram 💬✨")
+st.markdown("<h4 style = 'color: black; font-weight: 600' > 📸 Generador de captions con IA </h4>", unsafe_allow_html=True)
+st.markdown("<p style = 'color: black;' > Genera 5 captions atractivas con hashtags para tu post de Instagram 💬✨ </p>", 
+           unsafe_allow_html=True)
 
 # --- Input fields ---
-description = st.text_input("Describe tu foto o idea:")
-tone = st.selectbox("Elige un tono", ["Aesthetic 💅", "Divertido 🎉", "Inspirador 🚀", "Negocio 📈", "Romántico 💕", "Picante 🔥"])
+st.markdown("<p style='color: #34344e; font-weight:200; margin-bottom: -100px'📸 Sube una foto:</p>", unsafe_allow_html=True)
+uploaded_file = st.file_uploader("", type=["jpg", "jpeg", "png"])
+
+if uploaded_file is not None:
+    st.image(uploaded_file, caption="Vista previa de la imagen", use_container_width=True)
+
+st.markdown("<p style='color: #34344e; font-weight:200; margin-bottom: -100px'>🖼️ Describe tu foto:</p>", unsafe_allow_html=True)
+description = st.text_input(label="", placeholder="Ej. Foto en la playa al atardecer")
+
+st.markdown("<p style = 'color: #34344e; font-size: 16px; margin-bottom: -1000px' > Elige un tono: </p>", unsafe_allow_html = True)
+tone = st.selectbox("", ["Aesthetic 💅", "Divertido 🎉", "Inspirador 🚀", "Negocio 📈", "Romántico 💕", "Picante 🔥"])
+
+
+def encode_image(image_file):
+    return base64.b64encode(image_file.read()).decode()
+
+
+def picture_instagram_caption(description, tone, base64_image):
+    
+    prompt = (
+
+    f"""Genera 5 captions cortas y pegadizas para instagram con todo y hashtags.
+
+    Descripcion: {description}
+    Tono: {tone}.
+    
+    Cada caption debe de ser atractiva y optimizada para instagram.
+    """)
+    
+    try:
+        completion = client.responses.create(
+            model="gpt-4.1",
+            input=[
+                {
+                    "role": "user",
+                    "content": [
+                        { "type": "input_text", "text": prompt },
+                        {
+                            "type": "input_image",
+                            "image_url": f"data:image/jpeg;base64,{base64_image}",
+                        },
+                    ],
+                }
+            ],
+        )
+        
+        text_answer = completion.output_text
+        
+        return text_answer
+        
+    except Exception as e:
+        
+        return f"⚠️ Error generating captions: {e}"
 
 def text_instagram_caption(description, tone):
     
@@ -121,7 +156,7 @@ def text_instagram_caption(description, tone):
                                      "content": prompt}
                                 ],
                     temperature = 0.9,
-                    max_tokens = 400
+                    max_tokens = 800
         )
 
 
@@ -136,27 +171,71 @@ def text_instagram_caption(description, tone):
 
 # --- Button + Output ---
 if st.button("✨ Generar Captions"):
-    if description:
+    if description and uploaded_file:
+        
         with st.spinner("Generando..."):
-            captions = text_instagram_caption(description, tone)
+            
+            base64_image = encode_image(uploaded_file)
+            captions = picture_instagram_caption(description, tone, base64_image)
+        
         st.markdown(
                     '<div style="background-color: #FFFFFF; padding: 15px; border-radius: 10px; '
-                    'border-left: 6px solid #dc6378; font-weight: bold; color: #f1c694; margin-top: 20px;">'
+                    'border-left: 6px solid #ff0092; font-weight: bold; color: #ff0092; margin-top: 5px;">'
                     '✨ ¡Listo! Aquí están tus captions:'
                     '</div>',
                     unsafe_allow_html=True
-                    )    
+                    )
+        
         #st.success("¡Listo! Aquí están tus captions:")
-        st.markdown('<div class="caption-box">', unsafe_allow_html=True)
+        #st.markdown('<div class="caption-box">', unsafe_allow_html=True)
         st.markdown(f"```\n{captions}\n```")
         st.markdown('</div>', unsafe_allow_html=True)
+    
+    elif description and not uploaded_file:
+        
+        with st.spinner("Generando..."):
+            captions = text_instagram_caption(description, tone)
+        
+        st.markdown(
+                    '<div style="background-color: #FFFFFF; padding: 15px; border-radius: 10px; '
+                    'border-left: 6px solid #ff0092; font-weight: bold; color: #ff0092; margin-top: 5px;">'
+                    '✨ ¡Listo! Aquí están tus captions:'
+                    '</div>',
+                    unsafe_allow_html=True
+                    )
+        
+        #st.success("¡Listo! Aquí están tus captions:")
+        #st.markdown('<div class="caption-box">', unsafe_allow_html=True)
+        st.markdown(f"```\n{captions}\n```")
+        st.markdown('</div>', unsafe_allow_html=True)
+    
+    elif not description and uploaded_file:
+        
+        with st.spinner("Generando..."):
+            
+            base64_image = encode_image(uploaded_file)
+            captions = picture_instagram_caption(description, tone, base64_image)
+        
+        st.markdown(
+                    '<div style="background-color: #FFFFFF; padding: 15px; border-radius: 10px; '
+                    'border-left: 6px solid #ff0092; font-weight: bold; color: #ff0092; margin-top: 5px;">'
+                    '✨ ¡Listo! Aquí están tus captions:'
+                    '</div>',
+                    unsafe_allow_html=True
+                    )
+        
+        #st.success("¡Listo! Aquí están tus captions:")
+        #st.markdown('<div class="caption-box">', unsafe_allow_html=True)
+        st.markdown(f"```\n{captions}\n```")
+        st.markdown('</div>', unsafe_allow_html=True)
+        
     else:
-        st.warning("Por favor ingresa una descripción.")
+        st.warning("Por favor ingresa una descripción o foto.")
 
 # --- Footer ---
-st.markdown("<hr style='margin-top: 50px; border: none; height: 1px; background-color: #edeccf;'>", unsafe_allow_html=True)
+st.markdown("<hr style='margin-top: 50px; border: none; height: 1px; background-color: #34344e;'>", unsafe_allow_html=True)
 st.markdown(
-    "<p style='text-align: center; font-size: 12px; color: #101652;'>"
+    "<p style='text-align: center; font-size: 14px; color: #34344e;'>"
     "✨ Captions generadas con IA (by OpenAI)"
     "</p>",
     unsafe_allow_html=True
