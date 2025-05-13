@@ -29,45 +29,61 @@ st.markdown(
 
 st.markdown("""
     <style>
-        html, body, [data-testid="stAppViewContainer"] {
-            background-color: #fefefe !important;
-            font-family: 'Segoe UI', sans-serif;
+        body {
+            background-color: #bc9cc4;
         }
 
-        h1, h4 {
-            color: #2c3e50;
+        .block-container {
+            padding-top: 2rem;
+        }
+
+        h1 {
             text-align: center;
+            color: ##3a1367;
         }
 
-        .stTextInput > div > input,
-        .stSelectbox > div > div {
-            background-color: #ffffff !important;
-            color: #2c3e50 !important;
+        .main-header {
+            background-color: #e30e63;
+            padding: 20px;
             border-radius: 8px;
-            padding: 10px;
-        }
-
-        .stButton>button {
-            background-color: #ff6f61;
             color: white;
-            padding: 0.75em 1.5em;
-            border: none;
-            border-radius: 10px;
-            font-weight: bold;
-            font-size: 16px;
+            text-align: center;
+            font-size: 32px;
+            font-weight: 700;
         }
 
-        .stButton>button:hover {
-            background-color: #e04e41;
+        .input-area {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
         }
 
-        .caption-card {
-            background-color: #fdf6e3;
-            padding: 15px 20px;
+        .caption-box {
+            background-color: #fff6e8;
+            padding: 20px;
+            border-left: 6px solid #f39c12;
             border-radius: 10px;
-            margin-bottom: 15px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            margin-top: 20px;
+            color: #333;
             font-size: 16px;
+            font-family: "Segoe UI", sans-serif;
+        }
+
+        .logo {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 180px;
+            margin-bottom: 20px;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 12px;
+            color: gray;
+            margin-top: 40px;
         }
     </style>
 """, unsafe_allow_html=True)
@@ -76,53 +92,6 @@ my_api_key = os.getenv("OPENAI_API_KEY")
 client = OpenAI(api_key = my_api_key)
 
 #client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
-
-st.markdown("""
-    <style>
-        body {
-            background-color: #fdf6e3;
-        }
-        .reportview-container {
-            background: #fdf6e3;
-        }
-        header {
-            background-color: #2c3e50;
-            padding: 20px 0;
-            text-align: center;
-            color: white;
-            font-size: 30px;
-            font-weight: bold;
-        }
-        label, .stTextInput label, .stSelectbox label, .stMarkdown p {
-            color: #2c3e50 !important;
-            font-weight: 500;
-        }
-        .stTextInput > div > input,
-        .stSelectbox > div > div {
-            background-color: #1e1e1e !important;
-            color: #ffffff !important;
-        }
-        .stButton>button {
-            background-color: #2c3e50;
-            color: white;
-            border: none;
-            padding: 0.5em 1em;
-            font-weight: bold;
-            border-radius: 8px;
-        }
-        .stButton>button:hover {
-            background-color: #1a252f;
-        }
-        .caption-box {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
-            margin-top: 20px;
-            color: #2c3e50;
-        }
-    </style>
-""", unsafe_allow_html=True)
 
 # --- Header ---
 st.markdown("<header>📸 Generador de captions con IA</header>", unsafe_allow_html=True)
