@@ -13,23 +13,25 @@ BANNER_URL = "https://raw.githubusercontent.com/EManzur/ai-caption-generator/mai
 st.markdown("""
     <style>
         .custom-header {
-            background-color: white;
-            border: solid #ff0092;
-            padding: 5px 5px;
-            display: flex;
-            align-items: center;
-            border-radius: 10px;
+            background-color: #ffffff;
+            border: 3px solid #ff0092;
+            border-radius: 15px;
+            padding: 20px 0;
+            text-align: center;
+            margin-bottom: -20px;
         }
 
         .custom-header img {
             height: 100px;
+            margin-bottom: -10px;
         }
 
         .custom-header h1 {
-            color: #ff0092;
-            font-size: 22px;
+            font-size: 20px;
+            font-weight: 700;
             margin: 0;
-            padding-left: 10px;
+            margin-bottom: -10;
+            color: #ff0092;
         }
     </style>
 
